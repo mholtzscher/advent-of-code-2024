@@ -10,24 +10,13 @@ fun main() {
 }
 
 fun part1(input: List<List<Int>>) {
-    var count = 0
-    for (line in input) {
-        if (isSafe(line)) {
-            count++
-        }
-    }
+    val count = input.count { isSafe(it) }
     println(count)
 }
 
 fun part2(input: List<List<Int>>) {
-    var count = 0
-    for (line in input) {
-        if (isSafe(line)) {
-            count++
-        } else {
-            val safe = line.indices.any { skip -> isSafe(line.toMutableList().apply { removeAt(skip) }) }
-            if (safe) count++
-        }
+    val count = input.count { line ->
+        isSafe(line) || line.indices.any { skip -> isSafe(line.toMutableList().apply { removeAt(skip) }) }
     }
     println(count)
 }
