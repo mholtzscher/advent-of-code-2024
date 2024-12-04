@@ -21,14 +21,20 @@ fun part2(input: String) {
 
     var filter = false
     val sum = expression.findAll(input).map {
-        if (it.value == "do()") {
-            filter = false
-        } else if (it.value == "don't()") {
-            filter = true
-        } else {
-            if (!filter) return@map it.groups["num1"]!!.value.toInt() * it.groups["num2"]!!.value.toInt()
+        when {
+            it.value == "do()" -> {
+                filter = false
+                0
+            }
+
+            it.value == "don't()" -> {
+                filter = true
+                0
+            }
+
+            !filter -> it.groups["num1"]!!.value.toInt() * it.groups["num2"]!!.value.toInt()
+            else -> 0
         }
-        0
     }.sum()
 
     println(sum)
